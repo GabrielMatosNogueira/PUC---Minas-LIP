@@ -1,1 +1,2 @@
-# PUC---Minas-LIP
+# PUC Minas | LIP
+Welcome home, John
