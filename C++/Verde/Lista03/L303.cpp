@@ -1,66 +1,92 @@
 #include <iostream>
 #include <string>
-#include <iomanip>
+using namespace std;
 
-class Produto {
+class Funcionario
+{
 private:
-    std::string nome;
-    double preco;
+    string nome;
+    float salario;
 
 public:
-    // Construtor
-    Produto(std::string n, double p) : nome(n), preco(p) {}
+    Funcionario(string n = "", float s = 0.0f) : nome(n), salario(s) {}
 
-    // Métodos get e set para nome
-    std::string getNome() {
+    string getNome()
+    {
         return nome;
     }
 
-    void setNome(std::string n) {
+    void setNome(string n)
+    {
         nome = n;
     }
 
-    // Métodos get e set para preco
-    double getPreco() {
-        return preco;
+    float getSalario()
+    {
+        return salario;
     }
 
-    void setPreco(double p) {
-        preco = p;
+    void setSalario(float s)
+    {
+        salario = s;
     }
 
-    // Método para exibir os detalhes do produto
-    void exibirDetalhes() {
-        std::cout << "Nome: " << nome << std::endl;
-        std::cout << "Preco: " << std::fixed << std::setprecision(2) << preco << std::endl;
+    virtual void imprime()
+    {
+        cout << "Dados do Funcionario:" << endl;
+        cout << "Nome: " << nome << endl;
+        printf("Salario: %.2f\n", salario);
     }
 };
 
-int main() {
-    std::string nome;
-    double preco;
-    std::string subtitulo;
+class Gerente : public Funcionario
+{
+private:
+    float bonus;
 
-    // Entrada de dados
-    std::getline(std::cin, nome);
-    std::cin >> preco;
-    std::cin.ignore(); // Limpar o buffer do cin
-    std::getline(std::cin, subtitulo);
+public:
+    Gerente(string n = "", float s = 0.0f, float b = 0.0f) : Funcionario(n, s), bonus(b) {}
 
-    // Criação do objeto Produto
-    Produto produto(nome, preco);
+    float getBonus()
+    {
+        return bonus;
+    }
 
-    // Exibir detalhes iniciais
-    std::cout << "Detalhes iniciais do produto:" << std::endl;
-    produto.exibirDetalhes();
+    void setBonus(float b)
+    {
+        bonus = b;
+    }
 
-    // Modificações
-    produto.setNome(produto.getNome() + " " + subtitulo);
-    produto.setPreco(produto.getPreco() + 1.05);
+    void imprime() override
+    {
+        Funcionario::imprime();
+        printf("Bonus Gerente: %.2f", bonus);
+    }
+};
 
-    // Exibir detalhes modificados
-    std::cout << "Detalhes modificados do produto:" << std::endl;
-    produto.exibirDetalhes();
+int main()
+{
+    string nome;
+    float salario, bonus;
+
+    getline(cin, nome);
+
+    cin >> salario;
+
+    Funcionario funcionario(nome, salario);
+
+    cin.ignore();
+    getline(cin, nome);
+
+    cin >> salario;
+    ;
+    cin >> bonus;
+
+    Gerente gerente(nome, salario, bonus);
+
+    funcionario.imprime();
+
+    gerente.imprime();
 
     return 0;
 }
